@@ -18,10 +18,17 @@ function TicTacToe(size,dimensions) {
         return board;
     }
 
+    var recursiveIndex = function () {
+
+    }
+
     var recursivePlay = function(board,moveArr,move,currDim) {
         if (currDim<2) {
+            if(board[moveArr[0]]) {
+                return false;
+            }
             board[moveArr[0]] = move;
-            return;
+            return true;
         }
         recursivePlay(board[moveArr[0]],moveArr.slice(1),move,currDim-1);
     }
@@ -35,8 +42,8 @@ function TicTacToe(size,dimensions) {
         if (!isValidMove(moveArr)) {
             return false;
         }
-        recursivePlay(myBoard,moveArr,move,boardDim);
-        return true;
+        return recursivePlay(myBoard,moveArr,move,boardDim);
+        //return true;
     }
 
     this.getSize = function() {
@@ -49,7 +56,7 @@ function TicTacToe(size,dimensions) {
 
     //NOTE: THIS IS FOR DEBUGGING PURPOSES ONLY. DELETE THIS FUNCTION WHEN DONE.
     this.showBoard = function() {
-
+        console.log(myBoard);
     }
 
     return this;

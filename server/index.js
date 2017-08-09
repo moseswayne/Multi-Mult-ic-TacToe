@@ -19,7 +19,9 @@ router.get('/', function(req, res, next) {
 
 io.on('connection', function(socket) {
     console.log('Established client connection');
-    socket.on()
+    socket.on('StartGame', function(gameParams) {
+
+    })
 })
 
 module.exports = router;
