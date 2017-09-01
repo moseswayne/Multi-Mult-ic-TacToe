@@ -1,0 +1,3 @@
+function gameManager() {
+    return this;
+}

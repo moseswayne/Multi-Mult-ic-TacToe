@@ -1,15 +1,33 @@
 /**
  * Created by moses on 7/8/17.
  */
+var http = require('http');
 var express = require('express');
 var path = require('path');
-var index = require('./index');
 
 var app = express();
 
-app.use(express.static(path.join(__dirname, '../client')));
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+var index = require('./index');
+
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'jade');
+
+app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', index);
+
+io.on('connection', function(socket) {
+    console.log('Established public connection');
+    socket.on('StartGame', function(gameParams) {
+
+    })
+
+    socket.on('something', function() {
+        console.log("yay");
+    })
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -29,3 +47,7 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+module.exports.getServer = function(){
+    return server;
+}

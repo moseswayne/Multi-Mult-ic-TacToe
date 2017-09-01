@@ -1,14 +1,13 @@
 /**
  * Created by moses on 7/8/17.
  */
-var http = require('http');
 var app = require('./server/app');
 
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-var server = http.createServer(app);
+var server = app.getServer();
 
 server.listen(port);
 server.on('error', onError);
