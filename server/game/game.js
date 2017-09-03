@@ -14,5 +14,9 @@ function TicTacToeGame() {
         var playerData = gameData.players;
     }
 
+    var runGame = function() {
+
+    }
+
     return this;
 }

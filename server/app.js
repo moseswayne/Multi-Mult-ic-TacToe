@@ -18,6 +18,8 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', index);
 
+var gameMgr = gameManager();
+
 io.on('connection', function(socket) {
     console.log('Established public connection');
     socket.on('StartGame', function(gameParams) {
@@ -26,6 +28,10 @@ io.on('connection', function(socket) {
 
     socket.on('something', function() {
         console.log("yay");
+    })
+
+    socket.on('play', function(move) {
+        console.log(move);
     })
 })
 
