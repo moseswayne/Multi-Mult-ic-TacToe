@@ -31,7 +31,7 @@ io.on('connection', function(socket) {
     socket.on('joinRoom', function(roomName) {
         //console.log("something happened");
         if(!gameMgr.checkExistence(roomName)) {
-
+            //create room and redirect
         }
         console.log(myAns);
     })
