@@ -18,10 +18,23 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', index);
 
-var gameMgr = gameManager();
+var gameMgr = require('./game/gameManager');
+
+app.route('/:sessionId').get((req, res)  => {
+    console.log(req.params.sessionId);
+    res.render("index");
+});
 
 io.on('connection', function(socket) {
     console.log('Established public connection');
+
+    socket.on('joinRoom', function(roomName) {
+        //console.log("something happened");
+        if(!gameMgr.checkExistence(roomName)) {
+
+        }
+        console.log(myAns);
+    })
     socket.on('StartGame', function(gameParams) {
 
     })

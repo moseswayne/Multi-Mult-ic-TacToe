@@ -1,9 +1,10 @@
 var socket = io.connect();
 
 $(function(){
-    $('#submit').click(function() {
-        socket.emit('play',$('#move').val());
+    $('#jSubmit').click(function() {
+        socket.emit('joinRoom',$('#join').val());
     })
-
-
+    $('#something').click(function() {
+        socket.emit('something');//;$('#join').val());
+    })
 });
