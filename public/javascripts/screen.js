@@ -2,9 +2,8 @@ var socket = io.connect();
 
 $(function(){
     $('#jSubmit').click(function() {
-        socket.emit('joinRoom',$('#join').val());
-    })
-    $('#something').click(function() {
-        socket.emit('something');//;$('#join').val());
+        var roomName = $('#join').val();
+        socket.emit('joinRoom',roomName);
+        window.location.href = roomName;
     })
 });

@@ -1,5 +1,3 @@
-var mySocket;
-
 function gameManager() {
     var currentGames = new Map();
 
@@ -8,7 +6,10 @@ function gameManager() {
     }
 
     this.createNewGame = function(socket,roomName) {
-        currentGames.set(roomName,socket);
+        console.log("pls");
+        var newGame = require('./game')(socket);
+        currentGames.set(roomName,newGame);
+        newGame.initiateRoom();
     }
 
     return this;

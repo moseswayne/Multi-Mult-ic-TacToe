@@ -22,32 +22,34 @@ var gameMgr = require('./game/gameManager');
 
 app.route('/:sessionId').get((req, res)  => {
     console.log(req.params.sessionId);
-    res.render("index");
+    res.render("gameRoom");
 });
 
 io.on('connection', function(socket) {
     console.log('Established public connection');
 
     socket.on('joinRoom', function(roomName) {
-        //console.log("something happened");
+        console.log(gameMgr.checkExistence(roomName));
         if(!gameMgr.checkExistence(roomName)) {
             //create room and redirect
             //pls work
+            var localSocket = io.of('/'+roomName);
+            gameMgr.createNewGame(localSocket,roomName);
         }
-        console.log(myAns);
-    })
+        //console.log(myAns);
+    });
     socket.on('StartGame', function(gameParams) {
 
-    })
+    });
 
     socket.on('something', function() {
         console.log("yay");
-    })
+    });
 
     socket.on('play', function(move) {
         console.log(move);
     })
-})
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,4 +1,4 @@
-var socket = io.connect();
+const socket = io(window.location.pathname);
 
 $(function(){
     $('#submit').click(function() {
@@ -6,4 +6,8 @@ $(function(){
     })
 
 
+});
+
+socket.on('post',function (info) {
+    $("#chat").append("<p>"+info+"</p>");
 });
