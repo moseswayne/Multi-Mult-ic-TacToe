@@ -48,3 +48,8 @@ function GameBoard(size,dimensions) {
 
     return this;
 }
+
+module.exports = function(gSize,gDim) {
+    var newBoard = GameBoard(gSize,gDim);
+    return newBoard;
+}

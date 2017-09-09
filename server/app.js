@@ -38,17 +38,11 @@ io.on('connection', function(socket) {
         }
         //console.log(myAns);
     });
-    socket.on('StartGame', function(gameParams) {
-
-    });
 
     socket.on('something', function() {
         console.log("yay");
     });
 
-    socket.on('play', function(move) {
-        console.log(move);
-    })
 });
 
 // catch 404 and forward to error handler

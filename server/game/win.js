@@ -10,7 +10,7 @@ function baseWin(gridSize,coordArr) {
         setX.add(coordArr[i][0]);
         setY.add(coordArr[i][1]);
     }
-    return ((setX.size == gridSize && setY.size == gridSize) || setX.size == 1 || setY.size == 1);
+    return ((setX.size == gridSize && setY.size == gridSize) || (setX.size == 1 && setY.size == gridSize) || (setY.size == 1 && setX.size == gridSize));
 }
 
 function checkWin(dimensions,gridSize,coords) {
