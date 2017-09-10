@@ -19,6 +19,7 @@ function checkWin(dimensions,gridSize,coords) {
     //console.log(coords);
     var combos = Combinatorics.combination(dimArr,2);
     console.log(combos);
+    var d;
     while(d = combos.next()) {
         console.log(d);
         coordArr = [];
@@ -32,15 +33,17 @@ function checkWin(dimensions,gridSize,coords) {
     }
     return win;
 }
-
-function winGame(coordinates,used,gridSize,dimensions) {
-    check = coordinates.filter(x => !used.includes(x));
+//get combinatorics of gridSize-1 and then tack on the new move to each group to check for the win
+function winGame(coordinates,move,gridSize,dimensions) {
+    //check = coordinates.filter(x => !move.includes(x));
+    var combos = Combinatorics.bigCombination(coordinates,gridSize-1);
     winBool = false;
-    for(var i = 0; i<check.length; i++) {
-        var group = check[i];
+    var check;
+    while(check = combos.next()) {
+        var group = check.slice();
+        group.push(move);
         console.log(group);
         winBool = (winBool || checkWin(dimensions,gridSize,group));
-        used.push(group);
     }
     return winBool;
 }

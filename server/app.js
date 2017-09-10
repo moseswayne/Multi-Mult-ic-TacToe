@@ -22,7 +22,13 @@ var gameMgr = require('./game/gameManager');
 
 app.route('/:sessionId').get((req, res)  => {
     console.log(req.params.sessionId);
-    res.render("gameRoom");
+    if((!gameMgr.checkExistence(req.params.sessionId)) || gameMgr.checkFull(req.params.sessionId)){
+        console.log("I'm trying");
+        res.redirect('/');
+    } else {
+        gameMgr.sendHost(req.params.sessionId,req.protocol + '://' + req.get('host') + req.originalUrl);
+        res.render("gameRoom");
+    }
 });
 
 io.on('connection', function(socket) {
