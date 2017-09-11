@@ -31,7 +31,8 @@ function TicTacToeGame(socket) {
             var data = {
                 name:"player"+conNum,
                 moves:[],
-                token:conNum
+                token:conNum,
+                wins:0
             };
 
             playerData.set(socket.id,data);
@@ -63,7 +64,9 @@ function TicTacToeGame(socket) {
                     let checkWin = require('./game/win');
                     if(checkWin(playerData.get(socket.id).moves,move,gameInfo.gridSize,gameInfo.dimension)) {
                         socket.emit('win');
+                        playerData.get(socket.id).wins = playerData.get(socket.id).wins + 1;
                         socket.broadcast.emit('lose',playerData.get(socket.id).name);
+                        mySocket.broadcast('updateWin',{player:playerData.get(socket.id).name, winNum:playerData.get(socket.id).wins});
                     } else {
                         playerData.get(socket.id).moves.push(move);
                         mySocket.emit('disable');

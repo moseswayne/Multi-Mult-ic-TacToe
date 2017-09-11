@@ -1,0 +1,42 @@
+.description {
+    text-align: center;
+    font-family: "Lucida Grande", Helvetica, sans-serif;
+    font-size: 48px;
+}
+
+#roomIn {
+    height: 100%;
+}
+
+#buttonWrap {
+    text-align: center;
+}
+
+.button {
+    width: 75%;
+    border: 0;
+    border-radius: 5px;
+    background-color: #868686;
+
+    padding: 14px 20px;
+    transition:color .2s ease-out, background .2s ease-in;
+
+    font-family: "Lucida Grande", Helvetica, sans-serif;
+    font-size: 32px;
+    color: white;
+}
+
+.button:hover {
+    background-color: #d0d0d0;
+}
+
+input[type=text] {
+    width: 75%;
+    font-family: "Lucida Grande", Helvetica, sans-serif;
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding: 14px 20px;
+    border-width:1px;
+    border-radius: 10px;
+}

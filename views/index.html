@@ -6,14 +6,18 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/javascripts/screen.js"></script>
+    <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 <body>
-    <p>Join or Create a Game:</p>
+<div id="roomIn">
+    <p class="description">Join or Create a Game:</p>
+    <div id="buttonWrap">
     <form>
         <input type="text" id="join">
     </form>
-    <button type="button" id="jSubmit">Click Me!</button>
-    <button type="button" id="something">Click Me!</button>
-<!This is a comment: fire a socket event on the "Join Room" button to search for the room, if it exists, join it, if not, create a new room>
+        <button type="button" class="button" id="jSubmit">Join Room</button>
+    </div>
+    <!This is a comment: fire a socket event on the "Join Room" button to search for the room, if it exists, join it, if not, create a new room>
+</div>
 </body>
 </html>
