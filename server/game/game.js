@@ -14,6 +14,7 @@ function TicTacToeGame(socket) {
     var numMove = 0;
     var myRoom;
     var myHost;
+    var gameInfo;
 
     //Using this space to flesh out design thoughts
     //use function handles passed through the gameData object to store in the players loop
@@ -40,7 +41,7 @@ function TicTacToeGame(socket) {
             });
             
             socket.on('name', function (newName) {
-
+                playerData.get(socket.id).name = newName;
             });
 
             socket.on('addAI', function (newName) {
@@ -53,12 +54,23 @@ function TicTacToeGame(socket) {
                 mySocket.emit('begin',playerOrdering);
             });
             socket.on('play',function(move) {
-                mySocket.emit('post',move);
-                console.log(move);
-                // mySocket.emit('disable');
-                // let toMove = playerOrdering[numMove++%playerOrdering.length];
-                // movePlayers.get(toMove)();
-                // socket.broadcast.to(toMove).emit('message', 'for your eyes only');
+                if(!myBoard.playMove(move,playerData.get(socket.id).token)){
+                    socket.emit('invalid',move);
+                } else {
+                    // mySocket.emit('post', move);
+                    // console.log(move);
+
+                    let checkWin = require('./game/win');
+                    if(checkWin(playerData.get(socket.id).moves,move,gameInfo.gridSize,gameInfo.dimension)) {
+                        socket.emit('win');
+                        socket.broadcast.emit('lose',playerData.get(socket.id).name);
+                    } else {
+                        playerData.get(socket.id).moves.push(move);
+                        mySocket.emit('disable');
+                        let toMove = playerOrdering[++numMove % playerOrdering.length];
+                        socket.broadcast.to(toMove).emit('enable');
+                    }
+                }
             });
         });
     };
@@ -74,6 +86,7 @@ function TicTacToeGame(socket) {
     }
 
     var startGame = function(gameData) {
+        gameInfo = gameData;
         var bot;
         var bot_num = 0;
         for(bot in gameData.aiList) {

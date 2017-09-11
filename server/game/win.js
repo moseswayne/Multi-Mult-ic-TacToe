@@ -10,7 +10,11 @@ function baseWin(gridSize,coordArr) {
         setX.add(coordArr[i][0]);
         setY.add(coordArr[i][1]);
     }
-    return ((setX.size == gridSize && setY.size == gridSize) || (setX.size == 1 && setY.size == gridSize) || (setY.size == 1 && setX.size == gridSize));
+    return ((setX.size == gridSize && setY.size == gridSize) ||
+        (setX.size == 1 && setY.size == gridSize) ||
+        (setY.size == 1 && setX.size == gridSize) ||
+        (setX.size == 1 && setY.size == 1) ||
+        (setY.size == 1 && setX.size == 1));
 }
 
 function checkWin(dimensions,gridSize,coords) {
@@ -47,9 +51,11 @@ function winGame(coordinates,move,gridSize,dimensions) {
     }
     return winBool;
 }
-var myArr = [[[0,0,0,1],[1,0,1,1],[2,0,2,2]]]
-var empty = new Array(0);
-var myWin = (winGame(myArr,empty,3,4));
-console.log(myWin);
+
+module.exports = winGame;
+// var myArr = [[[0,0,0,1],[1,0,1,1],[2,0,2,2]]]
+// var empty = new Array(0);
+// var myWin = (winGame(myArr,empty,3,4));
+// console.log(myWin);
 //var check = [[0,0],[0,1],[0,2]];
 //console.log(baseWin(3,check));
