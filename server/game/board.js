@@ -16,7 +16,7 @@ function GameBoard(size,dimensions) {
             board[i] = constructBoard(size,dim-1,[]);
         }
         return board;
-    }
+    };
 
     var recursivePlay = function(board,moveArr,move,currDim) {
         if (currDim<2) {
@@ -27,24 +27,24 @@ function GameBoard(size,dimensions) {
             return true;
         }
         recursivePlay(board[moveArr[0]],moveArr.slice(1),move,currDim-1);
-    }
+    };
 
     this.playMove = function(moveArr,move){
         return recursivePlay(myBoard,moveArr,move,boardDim);
-    }
+    };
 
     this.getSize = function() {
         return boardSize;
-    }
+    };
 
     this.getDimensions = function() {
         return boardDim;
-    }
+    };
 
     //NOTE: THIS IS FOR DEBUGGING PURPOSES ONLY. DELETE THIS FUNCTION WHEN DONE.
     this.showBoard = function() {
         console.log(myBoard);
-    }
+    };
 
     return this;
 }
@@ -52,4 +52,4 @@ function GameBoard(size,dimensions) {
 module.exports = function(gSize,gDim) {
     var newBoard = GameBoard(gSize,gDim);
     return newBoard;
-}
+};

@@ -25,7 +25,6 @@ function TicTacToeGame(socket) {
         var conNum=0;
         mySocket.on('connection', function(socket) {
             console.log('joined');
-            mySocket.emit('playJoin',conNum);
             conNum++;
             players.push(socket.id);
             var data = {
@@ -36,9 +35,16 @@ function TicTacToeGame(socket) {
             };
 
             playerData.set(socket.id,data);
+            console.log(playerData);
+            var sendData = {
+                max_play:numPC,
+                game_data:[...playerData.values()]
+            }
+            mySocket.emit('playJoin',sendData);
 
             socket.on('setNum', function (number) {
-                numPC = number;
+                numPC = Number(number);
+                socket.broadcast.emit('newNum',numPC);
             });
             
             socket.on('name', function (newName) {
@@ -74,6 +80,30 @@ function TicTacToeGame(socket) {
                         socket.broadcast.to(toMove).emit('enable');
                     }
                 }
+            });
+
+            socket.on('chat_send',function(message) {
+                var dataPacket = {
+                    user:playerData(socket.id).name,
+                    msg:message
+                };
+                mySocket.broadcast.emit('chat_post',dataPacket);
+            });
+
+            socket.on('chat_type',function() {
+                socket.broadcast.emit('typing',playerData.get(socket.id).name);
+            });
+
+            socket.on('end_type',function () {
+                socket.broadcast.emit('no_typing',playerData.get(socket.id).name);
+            });
+
+            socket.on('disconnect', function () {
+                var ind = players.indexOf(socket.id);
+                if (ind > -1) {
+                    players.splice(ind, 1);
+                }
+                playerData.delete(socket.id);
             });
         });
     };

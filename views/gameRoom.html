@@ -6,16 +6,28 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/javascripts/gameRoom.js"></script>
+    <link rel="stylesheet" type="text/css" href="/gameRoom.css">
 </head>
 <body>
+<header id="menubar">
+<div id="settings">
+    <select class="gameSet" id="num_players"></select>
+    <select class="gameSet" id="dimensions"></select>
+    <select class="gameSet" id="grid"></select>
+    <button id="start">Start Game!</button>
+</div>
+</header>
+<div id="player_panel">
+
+</div>
 <p>Enter your move below:</p>
 <form>
     <input type="text" id="move">
 </form>
 <button type="button" id="submit">Click Me!</button>
-<button type="button" id="ai">Add a Bot!</button>
 
 <div id="chat">
+    <p>This is a test sdalkfjaksjfoiasdfiasndfkvnasdiofhsadnfsahdflnasdjvkf</p>
 </div>
 </body>
 </html>

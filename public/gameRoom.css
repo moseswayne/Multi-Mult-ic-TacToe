@@ -1,42 +1,61 @@
+body {
+    position: relative;
+}
+
 .description {
     text-align: center;
     font-family: "Lucida Grande", Helvetica, sans-serif;
     font-size: 48px;
 }
 
-#roomIn {
-    height: 100%;
-}
-
-#buttonWrap {
+#settings {
+    height: 8vh;
     text-align: center;
 }
 
-.button {
-    width: 75%;
-    border: 0;
-    border-radius: 5px;
-    background-color: #868686;
+#player_panel {
+    float: right;
+    overflow-y:scroll;
+    height:65vh;
+    width:10%;
+}
 
-    padding: 14px 20px;
-    transition:color .2s ease-out, background .2s ease-in;
+.gameSet {
+    width: 10%;
+    height: 6vh;
+    position: relative;
+    top: 12.5%;
+    margin-left: 2vw;
+}
 
-    font-family: "Lucida Grande", Helvetica, sans-serif;
-    font-size: 32px;
+#chat {
+    position: fixed;
+    bottom:25vh;
+    width: 100%;
+}
+
+/*
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+}
+
+li {
+    float: left;
+}
+
+.menuEl {
+    display: block;
     color: white;
-}
-
-.button:hover {
-    background-color: #d0d0d0;
-}
-
-input[type=text] {
-    width: 75%;
-    font-family: "Lucida Grande", Helvetica, sans-serif;
-    font-size: 28px;
-    margin-bottom: 20px;
     text-align: center;
-    padding: 14px 20px;
-    border-width:1px;
-    border-radius: 10px;
+    padding: 16px;
+    text-decoration: none;
 }
+
+.menuEl:hover {
+    background-color: #111111;
+}
+*/
