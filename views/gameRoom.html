@@ -5,15 +5,29 @@
     <title>4D Tic Tac Toe</title>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="/javascripts/chatter.js"></script>
     <script src="/javascripts/gameRoom.js"></script>
     <link rel="stylesheet" type="text/css" href="/gameRoom.css">
 </head>
 <body>
 <header id="menubar">
 <div id="settings">
-    <select class="gameSet" id="num_players"></select>
+    <div class="setDiv">
+        <input type="text" class="gameSet" placeholder="Enter Name:" id="player_name">
+        <button class="gameSet" id="change_name">Change Name!</button>
+    </div>
+    <div class="setDiv">
+        <label class="gameSet" for="num_players">Number of Players:</label>
+        <select class="gameSet" id="num_players"></select>
+    </div>
+    <div class="setDiv">
+    <label class="gameSet" for="dimensions">Number of Dimensions:</label>
     <select class="gameSet" id="dimensions"></select>
+    </div>
+    <div class="setDiv">
+        <label class="gameSet" for="grid">Grid Size:</label>
     <select class="gameSet" id="grid"></select>
+    </div>
     <button id="start">Start Game!</button>
 </div>
 </header>
@@ -27,7 +41,18 @@
 <button type="button" id="submit">Click Me!</button>
 
 <div id="chat">
-    <p>This is a test sdalkfjaksjfoiasdfiasndfkvnasdiofhsadnfsahdflnasdjvkf</p>
+    <div id="chat_screen">
+    </div>
+    <div id="chat_type">
+    </div>
+    <div id="chat_entry">
+        <div id="text_wrapper">
+            <textarea id="chat_box"></textarea>
+        </div>
+        <div id="submit_wrapper">
+            <button id="chat_submit">Send</button>
+        </div>
+    </div>
 </div>
 </body>
 </html>

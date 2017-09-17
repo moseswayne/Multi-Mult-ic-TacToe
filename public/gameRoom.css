@@ -1,5 +1,5 @@
 body {
-    position: relative;
+    margin:0 4px;
 }
 
 .description {
@@ -9,8 +9,8 @@ body {
 }
 
 #settings {
-    height: 8vh;
-    text-align: center;
+    height: 6vh;
+    width:100%;
 }
 
 #player_panel {
@@ -20,9 +20,25 @@ body {
     width:10%;
 }
 
+
+.setDiv {
+    float:left;
+    width:15%;
+    position: relative;
+    top: 12.5%;
+    margin-left: 2vw;
+}
+
 .gameSet {
-    width: 10%;
-    height: 6vh;
+    display:block;
+    width:80%;
+}
+
+
+#start {
+    float:left;
+    height: 100%;
+    width:5%;
     position: relative;
     top: 12.5%;
     margin-left: 2vw;
@@ -30,8 +46,65 @@ body {
 
 #chat {
     position: fixed;
-    bottom:25vh;
+    bottom:0;
+    height:35vh;
+    width: 99.5%;
+
+}
+
+#chat_screen {
+   /* position: fixed;
+    bottom:10vh;*/
+    overflow-y:scroll;
+    height:67.5%;
     width: 100%;
+}
+
+#type_wrapper {
+    position: fixed;
+    bottom:6vh;
+    width:100%;
+}
+
+#chat_type {
+    vertical-align: top;
+    height:7.5%;
+    width: 100%;
+}
+
+#chat_entry {
+    width: 100%;
+    position: fixed;
+    bottom:0;
+    height:8%;
+}
+
+#typing {
+    height:25%;
+}
+
+#text_wrapper {
+    width: 85%;
+    height:70%;
+    float: left;
+}
+
+#chat_box {
+    height:90%;
+    width:100%;
+    resize: none;
+    font-size: 16pt;
+}
+
+#submit_wrapper {
+    width: 14%;
+    height:70%;
+    float: right;
+}
+
+#chat_submit {
+    height:100%;
+    width:90%;
 }
 
 /*

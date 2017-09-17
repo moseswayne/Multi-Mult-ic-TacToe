@@ -49,6 +49,7 @@ function TicTacToeGame(socket) {
             
             socket.on('name', function (newName) {
                 playerData.get(socket.id).name = newName;
+                mySocket.emit('updatePlayers',[...playerData.values()]);
             });
 
             socket.on('addAI', function (newName) {
@@ -83,11 +84,13 @@ function TicTacToeGame(socket) {
             });
 
             socket.on('chat_send',function(message) {
+                var currDate = new Date();
                 var dataPacket = {
-                    user:playerData(socket.id).name,
-                    msg:message
+                    user:playerData.get(socket.id).name,
+                    msg:message,
+                    date:currDate
                 };
-                mySocket.broadcast.emit('chat_post',dataPacket);
+                mySocket.emit('chat_post',dataPacket);
             });
 
             socket.on('chat_type',function() {

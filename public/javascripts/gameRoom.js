@@ -6,10 +6,6 @@ $(function(){
         socket.emit('play',$('#move').val());
     });
 
-    $('#ai').click(function() {
-        socket.emit('addAI');
-    });
-
     $('#num_players').change(function(){
         socket.emit('setNum',$('#num_players').find(":selected").text());
     });
@@ -18,15 +14,15 @@ $(function(){
         socket.emit('setDim',$('#num_players').find(":selected").text());
     });
 
+    $('#change_name').click(function() {
+        socket.emit('name',$('#player_name').val());
+        $('#player_name').val('');
+    });
+
+    var chatClient = Chatter(socket,$('#chat_box'),$('#chat_submit'),$('#chat_type'),$('#chat_screen'));
+
 });
 
-function postMessage() {
-    $()
-}
-
-function playerTyping() {
-
-}
 
 function playerNumUpdate(newNum) {
     let oldSel = $('#num_players').find(":selected").text();
@@ -65,4 +61,8 @@ socket.on('post',function (info) {
 
 socket.on('newNum', function(newNum) {
     $("#num_players").val(""+newNum);
+});
+
+socket.on('updatePlayers', function (playData) {
+    playerPanelUpdate(playData);
 });
