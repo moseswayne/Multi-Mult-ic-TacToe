@@ -16,6 +16,32 @@ function TicTacToeGame(socket) {
     var myHost;
     var gameInfo;
 
+    var startGame = function(gameData) {
+        gameInfo = gameData;
+        var bot;
+        var bot_num = 0;
+        for(bot in gameData.aiList) {
+            var myAI = require('./ai/minmaxAI')(gameData.aiList[bot].difficulty,myRoom);
+            let name = "Bot_" + gameData.aiList[bot].difficulty + "_" + (++bot_num);
+            players.push(name);
+
+        }
+        playerOrdering = players.slice();
+        shuffle(playerOrdering);
+        myBoard = require('./board')(gameData.boardSize,gameData.dimensions);
+        var playerData = gameData.players;
+
+    };
+
+    var runGame = function() {
+
+    };
+
+    var sendHeartbeat = function(){
+        setTimeout(sendHeartbeat, 10000);
+        mySocket.emit('heart', { heart : 1 });
+    }
+
     //Using this space to flesh out design thoughts
     //use function handles passed through the gameData object to store in the players loop
     //which is called each turn to force a move from a player. In the case of AI, this would
@@ -24,7 +50,7 @@ function TicTacToeGame(socket) {
         myRoom = room;
         var conNum=0;
         mySocket.on('connection', function(socket) {
-            console.log('joined');
+            //console.log('joined');
             conNum++;
             players.push(socket.id);
             var data = {
@@ -35,7 +61,7 @@ function TicTacToeGame(socket) {
             };
 
             playerData.set(socket.id,data);
-            console.log(playerData);
+            //console.log(playerData);
             var sendData = {
                 max_play:numPC,
                 game_data:[...playerData.values()]
@@ -101,6 +127,10 @@ function TicTacToeGame(socket) {
                 socket.broadcast.emit('no_typing',playerData.get(socket.id).name);
             });
 
+            socket.on('beat', function(data){
+                console.log("Client still connected");
+            });
+
             socket.on('disconnect', function () {
                 var ind = players.indexOf(socket.id);
                 if (ind > -1) {
@@ -109,6 +139,7 @@ function TicTacToeGame(socket) {
                 playerData.delete(socket.id);
             });
         });
+        setTimeout(sendHeartbeat, 10000);
     };
 
     this.isJoinable = function() {
@@ -120,27 +151,6 @@ function TicTacToeGame(socket) {
             myHost = newHost;
         }
     }
-
-    var startGame = function(gameData) {
-        gameInfo = gameData;
-        var bot;
-        var bot_num = 0;
-        for(bot in gameData.aiList) {
-            var myAI = require('./ai/minmaxAI')(bot.difficulty,myRoom);
-            let name = "Bot_" + bot.difficulty + "_" + ++bot_num;
-            players.push(name);
-
-        }
-        playerOrdering = players.slice();
-        shuffle(playerOrdering);
-        myBoard = require('./board')(gameData.boardSize,gameData.dimensions);
-        var playerData = gameData.players;
-
-    };
-
-    var runGame = function() {
-
-    };
 
     return this;
 }

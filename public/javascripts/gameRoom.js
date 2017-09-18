@@ -2,6 +2,8 @@ const socket = io(window.location.pathname);
 var typingList = [];
 
 $(function(){
+
+    var guiBoard = uiBoard($('#game_screen'));
     $('#submit').click(function() {
         socket.emit('play',$('#move').val());
     });
@@ -16,10 +18,27 @@ $(function(){
 
     $('#change_name').click(function() {
         socket.emit('name',$('#player_name').val());
-        $('#player_name').val('');
     });
 
+    for (var i = 2; i<11; i++) {
+        var option = $('<option></option>').attr("value", i).text(""+i);
+        $("#dimensions").append(option);
+    }
+
+    for (var i = 2; i<21; i++) {
+        var option = $('<option></option>').attr("value", i).text(""+i);
+        $("#grid").append(option);
+    }
+
+    $('#start').click(function() {
+        let size = $('#grid').val();
+        let dim = $('#dimensions').val();
+        guiBoard.initializeBoard(size,dim);
+    });
+
+
     var chatClient = Chatter(socket,$('#chat_box'),$('#chat_submit'),$('#chat_type'),$('#chat_screen'));
+
 
 });
 
@@ -27,7 +46,6 @@ $(function(){
 function playerNumUpdate(newNum) {
     let oldSel = $('#num_players').find(":selected").text();
     $("#num_players").empty();
-    console.log("pls");
     for (var i = newNum; i<20; i++) {
         var option = $('<option></option>').attr("value", i).text(""+i);
         $("#num_players").append(option);
@@ -65,4 +83,8 @@ socket.on('newNum', function(newNum) {
 
 socket.on('updatePlayers', function (playData) {
     playerPanelUpdate(playData);
+});
+
+socket.on('heart', function(data){
+    socket.emit('beat', {beat: 1});
 });
