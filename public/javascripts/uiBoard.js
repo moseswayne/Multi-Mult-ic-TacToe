@@ -1,7 +1,51 @@
-function uiBoard(screenDiv) {
+function uiBoard(screenDiv,sock) {
 
+    var usedMoves = [];
     var screen = screenDiv;
     var boardContainer;
+    var socket = sock;
+    var moveTurn = false;
+
+    var checkEmit = function(move) {
+
+        if(!moveTurn) {
+            console.log('wat');
+            return;
+        }
+        if(usedMoves.includes()) {
+            alert("That square has already been played!");
+            return;
+        }
+
+        socket.emit('play',move);
+    };
+
+    var setUpTags = function(ids) {
+        console.log('trying');
+        var ind;
+        for(ind in ids) {
+            let myBox = ids[ind];
+            $('#'+ids[ind]).on('click',function() {
+                //$('#'+myBox).append('X');
+                console.log(myBox);
+                checkEmit(myBox);
+            });
+
+        }
+    };
+
+    var recursiveIndex = function(grid,dimLeft,board,boardDim,boardFunc) {
+        if(dimLeft<1) {
+            board[0] = boardFunc(board,boardDim);
+            return;
+        }
+        var i;
+        for(i = 0;i<grid;i++) {
+            var newDim = boardDim.slice();
+            newDim.push(i);
+            recursiveIndex(grid,dimLeft-1,board[i],newDim,boardFunc);
+        }
+    };
 
     this.initializeBoard = function(size,dim) {
 
@@ -64,33 +108,15 @@ function uiBoard(screenDiv) {
         setUpTags(idArr);
     };
 
-    var recursiveIndex = function(grid,dimLeft,board,boardDim,boardFunc) {
-        if(dimLeft<1) {
-            board[0] = boardFunc(board,boardDim);
-            return;
-        }
-        var i;
-        for(i = 0;i<grid;i++) {
-            var newDim = boardDim.slice();
-            newDim.push(i);
-            recursiveIndex(grid,dimLeft-1,board[i],newDim,boardFunc);
-        }
+
+    this.playPiece = function(cellID,tok) {
+        $('#'+cellID).append(tok);
     };
 
-    var playPiece = function(cellID) {
-
+    this.flipTurn = function(bool) {
+        moveTurn = bool;
     };
 
-    var setUpTags = function(ids) {
-        var ind;
-        for(ind in ids) {
-            let myBox = ids[ind];
-            $('#'+ids[ind]).on('click',function() {
-                $('#'+myBox).append('X');
-            });
-
-        }
-    };
 
     return this;
 }

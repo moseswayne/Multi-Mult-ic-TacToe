@@ -149,7 +149,7 @@ td .content {
 
 #game_screen {
     width:85%;
-    height: 62vh;
+    height: 60vh;
     overflow-y: scroll;
     border: 1px solid black;
 }

@@ -6,7 +6,6 @@ function GameBoard(size,dimensions) {
     var boardDim = dimensions;
 
     var myBoard = [];
-    myBoard = constructBoard(size,dimensions,myBoard);
 
     var constructBoard = function(size,dim,board) {
         if (dim < 1) {
@@ -28,6 +27,8 @@ function GameBoard(size,dimensions) {
         }
         recursivePlay(board[moveArr[0]],moveArr.slice(1),move,currDim-1);
     };
+
+    myBoard = constructBoard(size,dimensions,myBoard);
 
     this.playMove = function(moveArr,move){
         return recursivePlay(myBoard,moveArr,move,boardDim);

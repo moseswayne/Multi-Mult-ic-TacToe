@@ -17,20 +17,20 @@ function TicTacToeGame(socket) {
     var gameInfo;
 
     var startGame = function(gameData) {
-        gameInfo = gameData;
-        var bot;
-        var bot_num = 0;
-        for(bot in gameData.aiList) {
-            var myAI = require('./ai/minmaxAI')(gameData.aiList[bot].difficulty,myRoom);
-            let name = "Bot_" + gameData.aiList[bot].difficulty + "_" + (++bot_num);
-            players.push(name);
-
-        }
+        // gameInfo = gameData;
+        // var bot;
+        // var bot_num = 0;
+        // for(bot in gameData.aiList) {
+        //     var myAI = require('./ai/minmaxAI')(gameData.aiList[bot].difficulty,myRoom);
+        //     let name = "Bot_" + gameData.aiList[bot].difficulty + "_" + (++bot_num);
+        //     players.push(name);
+        //
+        // }
+        gameInfo=gameData;
         playerOrdering = players.slice();
         shuffle(playerOrdering);
         myBoard = require('./board')(gameData.boardSize,gameData.dimensions);
-        var playerData = gameData.players;
-
+        mySocket.emit('initGame',gameData);
     };
 
     var runGame = function() {
@@ -85,27 +85,33 @@ function TicTacToeGame(socket) {
 
             socket.on('start',function(packagedData) {
                 startGame(packagedData);
-                mySocket.emit('begin',playerOrdering);
+                //mySocket.emit('begin',playerOrdering);
+                let mover = playerOrdering[0];
+                socket.broadcast.to(mover).emit('enable');
+                console.log(playerData.get(mover).name);
             });
             socket.on('play',function(move) {
-                if(!myBoard.playMove(move,playerData.get(socket.id).token)){
-                    socket.emit('invalid',move);
+                //if(!myBoard.playMove(move,playerData.get(socket.id).token)){
+                //    socket.emit('invalid',move);
+                //} else {
+                let posted = {
+                    move:move,
+                    token:playerData.get(socket.id).token
+                };
+                mySocket.emit('postMove', posted);
+                // console.log(move);
+                move = move.split('x');
+                let checkWin = require('./win');
+                if(checkWin(playerData.get(socket.id).moves,move,gameInfo.boardSize,gameInfo.dimensions)) {
+                    socket.emit('win');
+                    playerData.get(socket.id).wins = playerData.get(socket.id).wins + 1;
+                    socket.broadcast.emit('lose',playerData.get(socket.id).name);
+                    mySocket.emit('updateWin',[...playerData.values()]);//{player:playerData.get(socket.id).name, winNum:playerData.get(socket.id).wins});
                 } else {
-                    // mySocket.emit('post', move);
-                    // console.log(move);
-
-                    let checkWin = require('./game/win');
-                    if(checkWin(playerData.get(socket.id).moves,move,gameInfo.gridSize,gameInfo.dimension)) {
-                        socket.emit('win');
-                        playerData.get(socket.id).wins = playerData.get(socket.id).wins + 1;
-                        socket.broadcast.emit('lose',playerData.get(socket.id).name);
-                        mySocket.broadcast('updateWin',{player:playerData.get(socket.id).name, winNum:playerData.get(socket.id).wins});
-                    } else {
-                        playerData.get(socket.id).moves.push(move);
-                        mySocket.emit('disable');
-                        let toMove = playerOrdering[++numMove % playerOrdering.length];
-                        socket.broadcast.to(toMove).emit('enable');
-                    }
+                    playerData.get(socket.id).moves.push(move);
+                    mySocket.emit('disable');
+                    var toMove = playerOrdering[++numMove % playerOrdering.length];
+                    mySocket.to(toMove).emit('enable');
                 }
             });
 

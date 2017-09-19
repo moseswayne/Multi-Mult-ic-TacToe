@@ -1,9 +1,10 @@
 const socket = io(window.location.pathname);
 var typingList = [];
+var guiBoard;
 
 $(function(){
 
-    var guiBoard = uiBoard($('#game_screen'));
+    guiBoard = uiBoard($('#game_screen'),socket);
     $('#submit').click(function() {
         socket.emit('play',$('#move').val());
     });
@@ -33,7 +34,11 @@ $(function(){
     $('#start').click(function() {
         let size = $('#grid').val();
         let dim = $('#dimensions').val();
-        guiBoard.initializeBoard(size,dim);
+        let gameParams = {
+            boardSize: size,
+            dimensions: dim
+        };
+        socket.emit('start',gameParams);
     });
 
 
@@ -87,4 +92,33 @@ socket.on('updatePlayers', function (playData) {
 
 socket.on('heart', function(data){
     socket.emit('beat', {beat: 1});
+});
+
+socket.on('initGame',function(gameData) {
+    guiBoard.initializeBoard(gameData.boardSize,gameData.dimensions);
+});
+
+socket.on('updateWin',function(playerData) {
+    playerPanelUpdate(playerData);
+});
+
+socket.on('win',function () {
+    alert("You won!");
+});
+
+socket.on('lose',function () {
+    alert("You lost :(");
+});
+
+socket.on('postMove',function(play) {
+    guiBoard.playPiece(play.move,play.token);
+});
+
+socket.on('enable',function() {
+    //Say it's your move! Start a timer
+    guiBoard.flipTurn(true);
+});
+
+socket.on('disable',function() {
+    guiBoard.flipTurn(false);
 });

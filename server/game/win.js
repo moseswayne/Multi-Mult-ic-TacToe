@@ -19,8 +19,12 @@ function baseWin(gridSize,coordArr) {
 
 function checkWin(dimensions,gridSize,coords) {
     var win = true;
-    var dimArr = Array.from(new Array(dimensions), (val,index) => index);
-    //console.log(coords);
+    var dimArr = [];//Array.from(new Array(dimensions), (val,index) => index);
+    for(var i = 0;i<dimensions;i++){
+        dimArr[i]=i;
+    }
+    console.log(dimensions);
+    console.log(dimArr);
     var combos = Combinatorics.combination(dimArr,2);
     console.log(combos);
     var d;
@@ -40,6 +44,9 @@ function checkWin(dimensions,gridSize,coords) {
 //get combinatorics of gridSize-1 and then tack on the new move to each group to check for the win
 function winGame(coordinates,move,gridSize,dimensions) {
     //check = coordinates.filter(x => !move.includes(x));
+    if(coordinates.length<gridSize-1) {
+        return false;
+    }
     var combos = Combinatorics.bigCombination(coordinates,gridSize-1);
     winBool = false;
     var check;
@@ -53,9 +60,9 @@ function winGame(coordinates,move,gridSize,dimensions) {
 }
 
 module.exports = winGame;
-// var myArr = [[[0,0,0,1],[1,0,1,1],[2,0,2,2]]]
-// var empty = new Array(0);
+// var myArr = [[0,0,0,1],[1,0,1,1]];
+// var empty = [2,0,2,2];
 // var myWin = (winGame(myArr,empty,3,4));
 // console.log(myWin);
-//var check = [[0,0],[0,1],[0,2]];
-//console.log(baseWin(3,check));
+// var check = [[0,0],[0,1],[0,2]];
+// console.log(baseWin(3,check));
