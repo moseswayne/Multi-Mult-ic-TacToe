@@ -117,8 +117,17 @@ socket.on('postMove',function(play) {
 socket.on('enable',function() {
     //Say it's your move! Start a timer
     guiBoard.flipTurn(true);
+    $('#yourTurn').append('Your Turn');
 });
 
 socket.on('disable',function() {
     guiBoard.flipTurn(false);
+    $('#yourTurn').empty();
+});
+
+socket.on('over',function(winCoord) {
+    var i;
+    for(i in winCoord) {
+        $('#'+(winCoord[i].join('x'))).css('background-color','#f28f7d');
+    }
 });

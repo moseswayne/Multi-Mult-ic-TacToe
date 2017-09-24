@@ -105,6 +105,8 @@ function uiBoard(screenDiv,sock) {
         htmlStr+='</p>';
         screen.empty();
         screen.append(htmlStr);
+        var widthCalc = ''+((100-2*size)/size)+'%';
+        $('table').css('width',widthCalc);
         setUpTags(idArr);
     };
 

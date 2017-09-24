@@ -29,6 +29,10 @@ function TicTacToeGame(socket) {
         gameInfo=gameData;
         playerOrdering = players.slice();
         shuffle(playerOrdering);
+        var i;
+        for(i in playerOrdering) {
+            playerData.get(playerOrdering[i]).moves = [];
+        }
         myBoard = require('./board')(gameData.boardSize,gameData.dimensions);
         mySocket.emit('initGame',gameData);
     };
@@ -87,7 +91,7 @@ function TicTacToeGame(socket) {
                 startGame(packagedData);
                 //mySocket.emit('begin',playerOrdering);
                 let mover = playerOrdering[0];
-                socket.broadcast.to(mover).emit('enable');
+                mySocket.to(mover).emit('enable');
                 console.log(playerData.get(mover).name);
             });
             socket.on('play',function(move) {
@@ -102,7 +106,9 @@ function TicTacToeGame(socket) {
                 // console.log(move);
                 move = move.split('x');
                 let checkWin = require('./win');
-                if(checkWin(playerData.get(socket.id).moves,move,gameInfo.boardSize,gameInfo.dimensions)) {
+                let winObj = checkWin(playerData.get(socket.id).moves,move,gameInfo.boardSize,gameInfo.dimensions);
+                if(winObj.win) {
+                    mySocket.emit('over',winObj.condition);
                     socket.emit('win');
                     playerData.get(socket.id).wins = playerData.get(socket.id).wins + 1;
                     socket.broadcast.emit('lose',playerData.get(socket.id).name);

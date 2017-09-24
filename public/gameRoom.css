@@ -49,7 +49,6 @@ body {
     bottom:0;
     height:30vh;
     width: 99.5%;
-    border: 1px solid black;
 
 }
 
@@ -109,7 +108,6 @@ body {
 }
 
 table {
-    width: 20%;
     float: left;
     margin-right: 2%;
     margin-bottom: 2%;
@@ -151,9 +149,11 @@ td .content {
     width:85%;
     height: 60vh;
     overflow-y: scroll;
-    border: 1px solid black;
 }
 
+html, body{
+    height: 100%;
+}
 /*
 ul {
     list-style-type: none;
