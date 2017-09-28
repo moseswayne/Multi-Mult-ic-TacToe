@@ -1,0 +1,32 @@
+{
+  "name": "4D-TicTacToe",
+  "version": "0.0.1",
+  "engines": {
+    "node": "6.11.2"
+  },
+  "dependencies": {
+    "express":"4.15.4",
+    "jade":"1.11.0",
+    "socket.io":"2.0.3",
+    "js-combinatorics":"0.5.2",
+    "pug":"2.0.0-rc.3",
+    "shuffle-array":"1.0.1"
+  },
+  "description": "A real time multiplayer, multidimensional tic tac toe game.",
+  "main": "main.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moseswayne/4D-TicTacToe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/moseswayne/4D-TicTacToe/issues"
+  },
+  "homepage": "https://github.com/moseswayne/4D-TicTacToe#readme"
+}
