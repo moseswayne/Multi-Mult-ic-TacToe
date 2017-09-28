@@ -12,11 +12,12 @@ function uiBoard(screenDiv,sock) {
             console.log('wat');
             return;
         }
-        if(usedMoves.includes()) {
+        if(usedMoves.includes(move)) {
             alert("That square has already been played!");
             return;
         }
-
+        usedMoves.push(move);
+        move = move.split('x');
         socket.emit('play',move);
     };
 

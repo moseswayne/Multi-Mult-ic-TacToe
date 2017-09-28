@@ -111,7 +111,8 @@ socket.on('lose',function () {
 });
 
 socket.on('postMove',function(play) {
-    guiBoard.playPiece(play.move,play.token);
+    var gameMove = play.move.join('x');
+    guiBoard.playPiece(gameMove,play.token);
 });
 
 socket.on('enable',function() {

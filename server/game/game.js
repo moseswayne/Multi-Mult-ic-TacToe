@@ -104,7 +104,6 @@ function TicTacToeGame(socket) {
                 };
                 mySocket.emit('postMove', posted);
                 // console.log(move);
-                move = move.split('x');
                 let checkWin = require('./win');
                 let winObj = checkWin(playerData.get(socket.id).moves,move,gameInfo.boardSize,gameInfo.dimensions);
                 if(winObj.win) {

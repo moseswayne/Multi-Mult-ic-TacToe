@@ -2,32 +2,42 @@ function MinMaxAI(horizon,sockRoom) {
     let socket = require('socket.io-client');
     const client = socket.connect(sockRoom);
 
-    this.initiateAI = function() {
-        client.on('post',function () {
-            client.emit('play','I am here too');
+    this.initiateAI = function () {
+        client.on('post', function () {
+            client.emit('play', 'I am here too');
         });
 
 
     };
+}
 
-#minimax = 0
-#alphabeta = 0
-    turns = 0
+//#minimax = 0
+//#alphabeta = 0
+//    turns = 0
 
-    function minimax_dfs(game, state, depth, horizon, eval_fn):
+
+function getStates(game) {
+
+}
+
+function minimax_dfs(game, state, depth, horizon, eval_fn) {
     //"""Return (value, action) tuple for minimax search up to the given depth"""
-    val = -1*float('inf')
-    act = None
-    succ, action = game.get_successors(state)
-    for ind in range(len(succ)):
-    temp = min_value(game, succ[ind], depth, horizon, eval_fn)
-    if val<temp:
-    val = temp
-    act = action[ind]
+    var val = -1 * float('inf');
+    var move = NULL;
+    var resArr = (state);
+    var i;
+    for (i=0; i<successors.length; i++){
+        var temp = min_value(game, successors[i], depth, horizon, eval_fn)
+        if (val < temp) {
+            val = temp;
+            move = action[ind];
+        }
+    }
     //print "Minimax: " + str(minimax)
     return (val, act)
     // Note that eval_fn is a function which has been passed as an argument and
     // you can call it like any other function
+}
 
     function max_value(game, state, depth, horizon, eval_fn):
 #global minimax
