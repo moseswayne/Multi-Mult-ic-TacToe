@@ -1,0 +1,6 @@
+{
+  "name": "Multic-Tac-Toe",
+  "description": "Multidimensional, multiplayer tic-tac-toe",
+  "repository": "https://github.com/moseswayne/Multi-Mult-ic-TacToe",
+  "keywords": ["node", "express", "socket"]
+}
